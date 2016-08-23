@@ -33,15 +33,26 @@
         $.ajax({url: queryURL, method: 'GET'}).done(function(response) {
             
             for (i = 0; i < 10; i++) {
-                $('#sportsView').append('<img src=' + response.data[i].url + '>');  
+                $('#sportsView').append('<img src=' + response.data[i].images.original_still.url + ' data-still=' + response.data[i].images.original_still.url + ' data-animate=' + response.data[i].images.original.url + ' data-state="still" class="sports">'); 
             }
 
-            
-            
-            console.log(response);
+            $('.sports').on('click', function () {
+                var state = $(this).attr('data-state');
+                console.log(state);
+                
+                if (state === 'still') {
+                    $(this).attr('src', $(this).attr('data-animate'));
+                    $(this).attr('data-state', 'animate');
+                } else {
+                    var variable2 = $(this).attr('data-still');
+                    $(this).attr('src', variable2);
+                    $(this).attr('data-state', 'still'); 
+                }
+            });
         });
+    };
 
-    }
+    
 
     function renderButtons(){ 
 
