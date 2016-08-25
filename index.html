@@ -2,6 +2,55 @@
 
 <head>
     <title>Favorite Sports</title>
+
+    <style>
+    h1 {
+        text-align: center;
+        color: white;
+        font-size: 50px;
+    }
+
+    body {
+        background-color: #4285f4;
+    }
+
+    img {
+        border-radius: 10px;
+        height: 150px;
+        width: 250px;
+    }
+
+    button {
+        text-align: center;
+    }
+
+    .sport {
+        background-color: white;
+        height: 50px;
+        width: 100px;
+        border-radius: 10px;
+        margin: 10px;
+    }
+
+    form {
+        color: white;
+        text-align: center;
+    }
+
+    input {
+        margin-top: 10px;
+    }
+
+    #sportWindow {
+        display: inline-block;
+        margin: 10px;
+    }
+
+    #sportView {
+        width: 500px;
+    }
+
+    </style>
 </head>
 
 <body>
@@ -9,14 +58,14 @@
 <div class="container">
   <h1>Sport Search</h1>
 
-  <div id="buttonsView"></div>
-
   <form id="sport-form">
     <label for="sport-input">Add Your Favorite Sport</label>
     <input type="text" id="sport-input"><br>
     
     <input id="addSport" type="submit" value="Add a Sport Bro">
   </form>
+
+  <div id="buttonsView"></div>
 
   <div id="sportsView"></div>
 
@@ -33,7 +82,19 @@
         $.ajax({url: queryURL, method: 'GET'}).done(function(response) {
             
             for (i = 0; i < 10; i++) {
-                $('#sportsView').append('<img src=' + response.data[i].images.original_still.url + ' data-still=' + response.data[i].images.original_still.url + ' data-animate=' + response.data[i].images.original.url + ' data-state="still" class="sports">'); 
+                sportWindow = $('<div id="sportWindow" data-number=' + i + '>');
+
+                $(sportWindow).append("Rating: " + response.data[i].rating + "<br>");
+
+                $(sportWindow).append('<img src=' + response.data[i].images.original_still.url + ' data-still=' + response.data[i].images.original_still.url + ' data-animate=' + response.data[i].images.original.url + ' data-state="still" class="sports">');
+
+                $('#sportsView').append(sportWindow);
+
+            if ($(sportWindow).data("number", i) > 10) {
+                sportWindow.remove();
+            }
+                
+                console.log(response);
             }
 
             $('.sports').on('click', function () {
@@ -74,6 +135,8 @@
         sports.push(sport);
         
         renderButtons();
+
+        $('#sport-input').val('');
 
         return false;
     })
