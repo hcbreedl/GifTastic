@@ -23,7 +23,7 @@ var sports = ['Soccer', 'Football', 'Basketball', 'Swimming'];
 
             
 
-            $('#sportsView').fadeOut('fast').fadeIn('slow');
+            $('#sportsView').hide().fadeIn(2000);
 
             $('.sports').on('click', function () {
                 var state = $(this).attr('data-state');
