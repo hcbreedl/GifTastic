@@ -3,6 +3,8 @@
 <head>
     <title>Favorite Sports</title>
 
+    <link href="https://fonts.googleapis.com/css?family=Orbitron" rel="stylesheet">
+
     <style>
     h1 {
         text-align: center;
@@ -11,7 +13,8 @@
     }
 
     body {
-        background-color: #4285f4;
+        background-color: lightgrey;
+        font-family: 'Orbitron', sans-serif;
     }
 
     img {
@@ -22,12 +25,17 @@
 
     button {
         text-align: center;
+
+    }
+
+    button:focus {
+        outline: none;
     }
 
     .sport {
         background-color: white;
         height: 50px;
-        width: 100px;
+        width: 264px;
         border-radius: 10px;
         margin: 10px;
     }
@@ -44,6 +52,9 @@
     #sportWindow {
         display: inline-block;
         margin: 10px;
+        background-color: white;
+        padding: 20px;
+        border-radius: 10px;
     }
 
     #sportView {
@@ -88,13 +99,8 @@
 
                 $(sportWindow).append('<img src=' + response.data[i].images.original_still.url + ' data-still=' + response.data[i].images.original_still.url + ' data-animate=' + response.data[i].images.original.url + ' data-state="still" class="sports">');
 
-                $('#sportsView').append(sportWindow);
-
-            if ($(sportWindow).data("number", i) > 10) {
-                sportWindow.remove();
-            }
+                $('#sportsView').prepend(sportWindow);
                 
-                console.log(response);
             }
 
             $('.sports').on('click', function () {
